@@ -8,23 +8,23 @@ namespace ChatApp
     TcpClient _clientSocket;
     NetworkStream _serverStream;
 
-    public void SetUpServer(EventsArguments e)
+    public void SetUpServer(string ip, string nickName, string password, TypeAuthentication typeAuth)
     {
       if (_clientSocket == null) _clientSocket = new TcpClient();
-      _clientSocket.Connect(e.IpAdress, 8888);
+      _clientSocket.Connect(ip, 8888);
       _serverStream = _clientSocket.GetStream();
       byte[] outStream;
-      if (e.TypeAuthentication == TypeAuthentication.SignUp)
+      if (typeAuth == TypeAuthentication.SignUp)
       {
-        outStream = Encoding.ASCII.GetBytes(e.Password + ConstantsActionVerbs.Registration + e.NickName + "$");
+        outStream = Encoding.ASCII.GetBytes(password + ConstantsActionVerbs.Registration + nickName + "$");
       }
-      else if (e.TypeAuthentication == TypeAuthentication.Login)
+      else if (typeAuth == TypeAuthentication.Login)
       {
-        outStream = Encoding.ASCII.GetBytes(e.Password + ConstantsActionVerbs.Login + e.NickName + "$");
+        outStream = Encoding.ASCII.GetBytes(password + ConstantsActionVerbs.Login + nickName + "$");
       }
       else
       {
-        outStream = Encoding.ASCII.GetBytes(e.NickName + "$");
+        outStream = Encoding.ASCII.GetBytes(nickName + "$");
       }
       _serverStream.Write(outStream, 0, outStream.Length);
       _serverStream.Flush();

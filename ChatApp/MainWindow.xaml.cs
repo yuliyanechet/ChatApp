@@ -34,7 +34,7 @@ namespace ChatApp
     {
       // Open Authenticate Window
       _authWindow = new AuthWindow();
-      _authWindow.MyEvent += ConnectOrCreateChat;
+      _authWindow.SubmitForm += ConnectOrCreateChat;
       _authWindow.Show();
     }
 
@@ -47,13 +47,13 @@ namespace ChatApp
       }
 
       _serverClientSide = new ServerClientSide();
-      _serverClientSide.SetUpServer(e);
+      _serverClientSide.SetUpServer(e.IpAdress, e.NickName, e.Password, e.TypeAuthentication);
 
       _clientChatThread = new Thread(GetMessage);
       _clientChatThread.Start();
       NickNamelabel.Content = e.NickName;
 
-      _authWindow.MyEvent -= ConnectOrCreateChat;
+      _authWindow.SubmitForm -= ConnectOrCreateChat;
       _authWindow.Close();
     }
 

@@ -6,13 +6,13 @@ namespace ChatApp
   public partial class AuthWindow : Window
   {
     private EventsArguments _evArgs;
-        public event EventHandler<EventsArguments> MyEvent;
+        public event EventHandler<EventsArguments> SubmitForm;
 
-        protected void OnMyEvent()
+        protected void OnSubmitForm()
         {
-            if (MyEvent != null)
+            if (SubmitForm != null)
             {
-                MyEvent(this, _evArgs);
+                SubmitForm(this, _evArgs);
             }     
         }
 
@@ -31,7 +31,7 @@ namespace ChatApp
             _evArgs.NickName = NickNameTextBox.Text;
             _evArgs.Password = PasswordTextBox.Text;
             _evArgs.IpAdress = IpAdress.Text;
-            OnMyEvent();
+            OnSubmitForm();
         }
     }
 
